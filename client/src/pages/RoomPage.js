@@ -1,74 +1,60 @@
+
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import RoomList from '../components/RoomList';
-import RoomForm from '../components/RoomForm';
+
+import { addRoom, getRooms } from '../state/actions/roomActions';
+
+import {useSelector, useDispatch} from 'react-redux'
+
+
 
 const RoomPage = () => {
-  const [rooms, setRooms] = useState([]);
-  const [editingRoom, setEditingRoom] = useState(null);
+  const [subjectss, setSubjectss] = useState([]);
 
+  
+  
   useEffect(() => {
-    fetchRooms();
+    dispatch(getSubjects());
   }, []);
+  const dispatch = useDispatch();
+  
+  
+  
+  const rooms = useSelector(state => state.room.rooms);
+  
+  // console.log(subjects)
 
-  const fetchRooms = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/rooms');
-      setRooms(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const handleAddRoom = async (room) => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/rooms', room);
-      setRooms([...rooms, response.data]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const handleUpdateRoom = async (room) => {
-    try {
-      const response = await axios.put(`http://localhost:8000/api/rooms/${room._id}`, room);
-      setRooms((prevRooms) =>
-        prevRooms.map((r) => (r._id === room._id ? response.data : r))
-      );
-      setEditingRoom(null);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [name, setName] = useState('');
 
-  const handleDeleteRoom = async (room) => {
-    try {
-      await axios.delete(`http://localhost:8000/api/rooms/${room._id}`);
-      setRooms(rooms.filter((r) => r._id !== room._id));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const handleSubjectAdd = () => {
 
-  const handleEditRoom = (room) => {
-    setEditingRoom(room);
-  };
+    const sub = {name:name}
 
-  const handleCancelEdit = () => {
-    setEditingRoom(null);
-  };
+    dispatch(addSubject(sub))
+    
 
+  }
   return (
-    <div className="container">
-      <h2 className="mt-4 mb-3">Room Management</h2>
-      <RoomForm
-        onSubmit={editingRoom ? handleUpdateRoom : handleAddRoom}
-        onCancel={handleCancelEdit}
-        initialData={editingRoom}
-      />
-      <RoomList rooms={rooms} onEdit={handleEditRoom} onDelete={handleDeleteRoom} />
+    <div>
+      <h2>Subject Management </h2>
+
+      <input type="text" value={name} onChange={(e) => setName(e.target.value) }  />
+
+      <button  onClick={handleSubjectAdd} > add sub </button>
+
+  
+
+      {rooms.map((room,i) => (
+        <h3 key={i} > {room.name} </h3>
+      )  )}
+      
+
+     
+
     </div>
   );
 };
 
 export default RoomPage;
+

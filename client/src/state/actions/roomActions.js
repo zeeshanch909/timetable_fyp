@@ -7,7 +7,7 @@ export const getRooms = () => (dispatch, getState) => {
     dispatch(setRoomLoading());
 
     // axios.get('/api/suRooms   tokenConfig(getState))
-    axios.get('/api/subjects')
+    axios.get('/api/rooms')
         .then(res => {
             dispatch({
                 type: GET_ROOMS,
@@ -22,7 +22,7 @@ export const getRooms = () => (dispatch, getState) => {
 
 export const deleteRoom = (id ) => (dispatch, getState) => {
     // axios.delete(`/api/subjects/${id}` ,tokenConfig(getState))
-    axios.delete(`/api/subjects/${id}` )
+    axios.delete(`/api/rooms/${id}` )
         .then(res => dispatch({
             type: DELETE_ROOM,
             payload: id
@@ -35,7 +35,7 @@ export const deleteRoom = (id ) => (dispatch, getState) => {
 
 export const addRoom = (lead) => (dispatch, getState) => {
     // axios.post('/api/subjects', lead, tokenConfig(getState))
-    axios.post('/api/subjects', lead)
+    axios.post('/api/rooms', lead)
         .then(res => dispatch({
             type: ADD_ROOM,
             payload: res.data
