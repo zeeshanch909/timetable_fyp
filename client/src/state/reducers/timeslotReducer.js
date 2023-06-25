@@ -1,15 +1,17 @@
 import {
-    ROOM_LOADING,
-    ADD_ROOM,
-    GET_ROOMS,
-    DELETE_ROOM,
-    UPDATE_ROOM,
+    TIMESLOT_LOADING,
+    ADD_TIMESLOT,
+    GET_TIMESLOTS,
+    DELETE_TIMESLOT,
+    UPDATE_TIMESLOT,
+
+
 
 } from "../actions/types";
 
 
 const initialState = {
-    rooms:[],    
+    timeslots:[],    
     loading:false
 
 }
@@ -18,30 +20,30 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case GET_ROOMS:
+        case GET_TIMESLOTS:
             return {
                 ...state,
-                rooms: action.payload,
+                timeslots: action.payload,
                 loading: false
             };
-        case DELETE_ROOM:
+        case DELETE_TIMESLOT:
             return {
                 ...state,
-                rooms: state.subjects.filter(room => room._id !== action.payload)
+                timeslots: state.subjects.filter(timeslot => timeslot._id !== action.payload)
             };
-        case ADD_ROOM:
+        case ADD_TIMESLOT:
             return {
                 ...state,
-                rooms: [action.payload, ...state.rooms]
+                timeslots: [action.payload, ...state.timeslots]
             };
-        case UPDATE_ROOM:
+        case UPDATE_TIMESLOT:
             return {
                 ...state,
-                rooms: [ ...state.rooms]
+                timeslots: [ ...state.timeslots]
                 
 
             };
-        case ROOM_LOADING:
+        case TIMESLOT_LOADING:
             return {
                 ...state,
                 loading: true

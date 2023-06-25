@@ -4,6 +4,8 @@ import authReducer from './authReducer';
 import mailReducer from "./mailReducer";
 import subjectReducer from "./subjectReducer";
 import roomReducer from "./roomReducer";
+import teacherReducer from "./teacherReducer";
+import timeslotReducer from "./timeslotReducer";
 
 
 export default combineReducers({
@@ -13,7 +15,9 @@ export default combineReducers({
 
     mail: mailReducer,
     subject : subjectReducer,
-    room: roomReducer
+    room: roomReducer,
+    teacher: teacherReducer,
+    timeslot: timeslotReducer
 
 
 })

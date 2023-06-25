@@ -8,12 +8,11 @@ import {useSelector, useDispatch} from 'react-redux'
 
 
 const RoomPage = () => {
-  const [subjectss, setSubjectss] = useState([]);
 
   
   
   useEffect(() => {
-    dispatch(getSubjects());
+    dispatch(getRooms());
   }, []);
   const dispatch = useDispatch();
   
@@ -21,7 +20,7 @@ const RoomPage = () => {
   
   const rooms = useSelector(state => state.room.rooms);
   
-  // console.log(subjects)
+  console.log(rooms)
 
 
 
@@ -29,15 +28,15 @@ const RoomPage = () => {
 
   const handleSubjectAdd = () => {
 
-    const sub = {name:name}
+    const sub = {number:name}
 
-    dispatch(addSubject(sub))
+    dispatch(addRoom(sub))
     
 
   }
   return (
     <div>
-      <h2>Subject Management </h2>
+      <h2>room Management </h2>
 
       <input type="text" value={name} onChange={(e) => setName(e.target.value) }  />
 
@@ -46,7 +45,7 @@ const RoomPage = () => {
   
 
       {rooms.map((room,i) => (
-        <h3 key={i} > {room.name} </h3>
+        <h3 key={i} > {room.number} </h3>
       )  )}
       
 

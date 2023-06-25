@@ -1,40 +1,74 @@
-import React, { useState } from 'react';
-import TimeSlotList from '../components/TimeSlotList';
-import TimeSlotForm from '../components/TimeSlotForm';
 
-const TimeSlotPage = () => {
-  const [timeSlots, setTimeSlots] = useState([]);
+import React, { useState, useEffect } from 'react';
 
-  const handleAddTimeSlot = (timeSlot) => {
-    // Add a new time slot
-    setTimeSlots([...timeSlots, timeSlot]);
-  };
+import { addTimeslot, getTimeslots } from '../state/actions/timeslotActions';
 
-  const handleEditTimeSlot = (updatedTimeSlot) => {
-    // Find the index of the time slot to be edited
-    const index = timeSlots.findIndex((timeSlot) => timeSlot.id === updatedTimeSlot.id);
+import {useSelector, useDispatch} from 'react-redux'
 
-    if (index !== -1) {
-      // Update the time slot at the found index
-      const updatedTimeSlots = [...timeSlots];
-      updatedTimeSlots[index] = updatedTimeSlot;
-      setTimeSlots(updatedTimeSlots);
+
+
+const TeacherPage = () => {
+
+
+  
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getTimeslots());
+  }, []);
+  
+  
+  
+  const timeslots = useSelector(state => state.timeslot.timeslots);
+  
+  console.log(timeslots)
+
+
+
+  const [slotnumber, setSlotnumber] = useState('');
+  const [starttime, setStarttime] = useState('');
+  const [endtime, setEndtime] = useState('');
+
+  const handleTimeSlotAdd = () => {
+
+    const sub = {
+      slotNumber: slotnumber, 
+      startTime: starttime,
+      endTime: endtime
     }
-  };
 
-  const handleDeleteTimeSlot = (timeSlot) => {
-    // Filter out the time slot to be deleted
-    const updatedTimeSlots = timeSlots.filter((slot) => slot.id !== timeSlot.id);
-    setTimeSlots(updatedTimeSlots);
-  };
+    dispatch(addTimeslot(sub))
+    
 
+
+  }
   return (
     <div>
-      <h2>Time Slot Management</h2>
-      <TimeSlotList timeSlots={timeSlots} onEdit={handleEditTimeSlot} onDelete={handleDeleteTimeSlot} />
-      <TimeSlotForm onSubmit={handleAddTimeSlot} />
+      <h2>Time Management</h2>
+    
+      <input type="number " value={slotnumber} onChange={(e) => setSlotnumber(e.target.value) }  />
+      <input type="text" value={starttime} onChange={(e) => setStarttime(e.target.value) }  />
+      <input type="text" value={endtime} onChange={(e) => setEndtime(e.target.value) }  />
+
+      <button  onClick={handleTimeSlotAdd} > add slot </button>
+
+  
+
+      {timeslots.map((timeslot,i) => (
+        <>
+        <h3 key={i} > {timeslot.startTime} </h3> <br />
+        <h3  > {timeslot.endTime} </h3> <br />
+        
+        <hr />
+        </>
+      )  )}
+      
+
+     
+
     </div>
   );
 };
 
-export default TimeSlotPage;
+export default TeacherPage
+

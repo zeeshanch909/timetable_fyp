@@ -24,6 +24,18 @@ export const  ADD_ROOM = 'ADD_ROOM';
 export const  DELETE_ROOM = 'DELETE_ROOM';
 export const  ROOM_LOADING = 'ROOM_LOADING';
 
+export const  GET_TEACHERS = 'GET_TEACHERS';
+export const  UPDATE_TEACHER = 'UPDATE_TEACHER';
+export const  ADD_TEACHER = 'ADD_TEACHER';
+export const  DELETE_TEACHER = 'DELETE_TEACHER';
+export const  TEACHER_LOADING = 'TEACHER_LOADING';
+
+export const  GET_TIMESLOTS = 'GET_TIMESLOTS';
+export const  UPDATE_TIMESLOT = 'UPDATE_TIMESLOT';
+export const  ADD_TIMESLOT = 'ADD_TIMESLOT';
+export const  DELETE_TIMESLOT = 'DELETE_TIMESLOT';
+export const  TIMESLOT_LOADING = 'TIMESLOT_LOADING';
+
 // export const  GET_VENDOR = 'GET_VENDOR';
 // export const  UPDATE_VENDOR = 'UPDATE_VENDOR';
 // export const  ADD_VENDOR = 'ADD_VENDOR';

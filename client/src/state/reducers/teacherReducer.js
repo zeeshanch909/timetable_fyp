@@ -1,15 +1,17 @@
 import {
-    ROOM_LOADING,
-    ADD_ROOM,
-    GET_ROOMS,
-    DELETE_ROOM,
-    UPDATE_ROOM,
+    TEACHER_LOADING,
+    ADD_TEACHER,
+    GET_TEACHERS,
+    DELETE_TEACHER,
+    UPDATE_TEACHER,
+
+
 
 } from "../actions/types";
 
 
 const initialState = {
-    rooms:[],    
+    teachers:[],    
     loading:false
 
 }
@@ -18,30 +20,30 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case GET_ROOMS:
+        case GET_TEACHERS:
             return {
                 ...state,
-                rooms: action.payload,
+                teachers: action.payload,
                 loading: false
             };
-        case DELETE_ROOM:
+        case DELETE_TEACHER:
             return {
                 ...state,
-                rooms: state.subjects.filter(room => room._id !== action.payload)
+                teachers: state.subjects.filter(teacher => teacher._id !== action.payload)
             };
-        case ADD_ROOM:
+        case ADD_TEACHER:
             return {
                 ...state,
-                rooms: [action.payload, ...state.rooms]
+                teachers: [action.payload, ...state.teachers]
             };
-        case UPDATE_ROOM:
+        case UPDATE_TEACHER:
             return {
                 ...state,
-                rooms: [ ...state.rooms]
+                teachers: [ ...state.teachers]
                 
 
             };
-        case ROOM_LOADING:
+        case TEACHER_LOADING:
             return {
                 ...state,
                 loading: true
