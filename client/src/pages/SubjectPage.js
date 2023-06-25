@@ -1,110 +1,58 @@
-// import React, { useState } from 'react';
-// import SubjectList from '../components/SubjectList';
-// import SubjectForm from '../components/SubjectForm';
-
-// const SubjectPage = () => {
-//   const [subjects, setSubjects] = useState([]);
-
-//   const handleAddSubject = (subject) => {
-//     // Logic to add a new subject
-//     // Update the state or perform any other necessary operations
-//   };
-
-//   const handleEditSubject = (subject) => {
-//     // Logic to edit a subject
-//     // Update the state or perform any other necessary operations
-//   };
-
-//   const handleDeleteSubject = (subject) => {
-//     // Logic to delete a subject
-//     // Update the state or perform any other necessary operations
-//   };
-
-//   return (
-//     <div>
-//       <h2>Subject Management</h2>
-//       <SubjectList subjects={subjects} onEdit={handleEditSubject} onDelete={handleDeleteSubject} />
-//       <SubjectForm onSubmit={handleAddSubject} />
-//     </div>
-//   );
-// };
-
-// export default SubjectPage;
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import SubjectList from '../components/SubjectList';
-import SubjectForm from '../components/SubjectForm';
+
+import { getSubjects, addSubject } from '../state/actions/subjectActions';
+
+import {useSelector, useDispatch} from 'react-redux'
+
+
 
 const SubjectPage = () => {
-  const [subjects, setSubjects] = useState([]);
-  const [editingSubject, setEditingSubject] = useState(null);
+  const [subjectss, setSubjectss] = useState([]);
 
+  
+  
   useEffect(() => {
-    fetchSubjects();
+    dispatch(getSubjects());
   }, []);
+  const dispatch = useDispatch();
+  
+  
+  
+  const subjects = useSelector(state => state.subject.subjects);
+  
+  console.log(subjects)
 
-  const fetchSubjects = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/subjects');
-      setSubjects(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const handleAddSubject = async (subject) => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/subjects', subject);
-      setSubjects([...subjects, response.data]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const handleUpdateSubject = async (subject) => {
-    try {
-      const response = await axios.put(`http://localhost:8000/api/subjects/${subject._id}`, subject);
-      setSubjects((prevSubjects) =>
-        prevSubjects.map((s) => (s._id === subject._id ? response.data : s))
-      );
-      setEditingSubject(null);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [name, setName] = useState('');
 
-  const handleDeleteSubject = async (subject) => {
-    try {
-      await axios.delete(`http://localhost:8000/api/subjects/${subject._id}`);
-      setSubjects(subjects.filter((s) => s._id !== subject._id));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const handleSubjectAdd = () => {
 
-  const handleEditSubject = (subject) => {
-    setEditingSubject(subject);
-  };
+    const sub = {name:name}
 
-  const handleCancelEdit = () => {
-    setEditingSubject(null);
-  };
+    dispatch(addSubject(sub))
+    
+    setSubjectss(subjects)
 
+  }
   return (
     <div>
       <h2>Subject Management</h2>
-      <SubjectForm
-        onSubmit={editingSubject ? handleUpdateSubject : handleAddSubject}
-        onCancel={handleCancelEdit}
-        initialData={editingSubject}
-      />
+    
+      <input type="text" value={name} onChange={(e) => setName(e.target.value) }  />
 
-      <SubjectList
-        subjects={subjects}
-        onEdit={handleEditSubject}
-        onDelete={handleDeleteSubject}
-      />
+      <button  onClick={handleSubjectAdd} > add sub </button>
+
+  
+
+      {subjects.map((subject,i) => (
+        <h3 key={i} > {subject.name} </h3>
+      )  )}
+      
+
+     
+
     </div>
   );
 };

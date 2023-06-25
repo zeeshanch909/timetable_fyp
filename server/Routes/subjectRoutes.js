@@ -29,6 +29,9 @@ router.get('/:id', async (req, res) => {
 
 // POST a new subject
 router.post('/', async (req, res) => {
+
+  console.log(req.body.name)
+
   const subject = new Subject({
     name: req.body.name,
     // Add more fields as per your requirements
